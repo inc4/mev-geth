@@ -929,6 +929,15 @@ func (w *worker) commitTransaction(env *environment, tx *types.Transaction) ([]*
 	gasUsed := new(big.Int).SetUint64(receipt.GasUsed)
 	env.profit.Add(env.profit, gasUsed.Mul(gasUsed, gasPrice))
 
+	// coinbase balance difference already contains gas fee
+	if trackProfit {
+		finalBalance := w.current.state.GetBalance(w.coinbase)
+		w.current.profit.Add(w.current.profit, new(big.Int).Sub(finalBalance, initialBalance))
+	} else {
+		gasUsed := new(big.Int).SetUint64(receipt.GasUsed)
+		w.current.profit.Add(w.current.profit, gasUsed.Mul(gasUsed, tx.GasPrice()))
+	}
+
 	return receipt.Logs, nil
 }
 
