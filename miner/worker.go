@@ -257,6 +257,8 @@ type worker struct {
 
 	flashbots *flashbotsData
 
+	flashbots *flashbotsData
+
 	// Test hooks
 	newTaskHook  func(*task)                        // Method to call upon receiving a new sealing task.
 	skipSealHook func(*task) bool                   // Method to decide whether skipping the sealing.
@@ -845,7 +847,6 @@ func (w *worker) makeEnv(parent *types.Block, header *types.Header, coinbase com
 	if err != nil {
 		return nil, err
 	}
-	state.StartPrefetcher("miner")
 
 	// Note the passed coinbase may be different with header.Coinbase.
 	env := &environment{
