@@ -824,9 +824,8 @@ func (w *worker) updateSnapshot() {
 	w.snapshotState = w.current.state.Copy()
 }
 
-func (w *worker) commitTransaction(tx *types.Transaction, coinbase common.Address, trackProfit bool) ([]*types.Log, error) {
+func (w *worker) commitTransaction(tx *types.Transaction, coinbase common.Address) ([]*types.Log, error) {
 	snap := w.current.state.Snapshot()
-	initialBalance := w.current.state.GetBalance(w.coinbase)
 
 	gasPrice, err := tx.EffectiveGasTip(w.current.header.BaseFee)
 	if err != nil {
@@ -1020,7 +1019,7 @@ func (w *worker) commitTransactions(txs *types.TransactionsByPriceAndNonce, coin
 		// Start executing the transaction
 		w.current.state.Prepare(tx.Hash(), w.current.tcount)
 
-		logs, err := w.commitTransaction(tx, coinbase, false)
+		logs, err := w.commitTransaction(tx, coinbase)
 		switch {
 		case errors.Is(err, core.ErrGasLimitReached):
 			// Pop the current out-of-gas transaction without shifting in the next from the account
@@ -1409,6 +1408,7 @@ func (w *worker) computeBundleGas(bundle types.MevBundle, parent *types.Block, h
 
 		state.Prepare(tx.Hash(), i+currentTxCount)
 		coinbaseBalanceBefore := state.GetBalance(w.coinbase)
+
 		receipt, err := core.ApplyTransaction(w.chainConfig, w.chain, &w.coinbase, gasPool, state, header, tx, &tempGasUsed, *w.chain.GetVMConfig())
 		if err != nil {
 			return simulatedBundle{}, err
