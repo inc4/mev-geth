@@ -931,7 +931,7 @@ func (w *worker) commitTransaction(env *environment, tx *types.Transaction) ([]*
 	env.profit.Add(env.profit, gasUsed.Mul(gasUsed, gasPrice))
 
 	gasUsed := new(big.Int).SetUint64(receipt.GasUsed)
-	w.current.profit.Add(w.current.profit, gasUsed.Mul(gasUsed, tx.GasPrice()))
+	w.current.profit.Add(w.current.profit, gasUsed.Mul(gasUsed, gasPrice))
 
 	return receipt.Logs, nil
 }
