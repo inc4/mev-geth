@@ -1,0 +1,49 @@
+name: Attach bin to release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-mev-geth-bin:
+    runs-on: ubuntu-latest
+    container: 
+        image: debian:buster
+        env: 
+          DEBIAN_FRONTEND: noninteractive
+          
+    name: Build and upload mev-geth to release assets
+    steps:
+      - name: Pull source
+        uses: actions/checkout@v1
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      
+      - name: Install make
+        run: apt update; apt-get install -yq build-essential zip ca-certificates
+      
+      - name: build geth
+        run: make geth
+
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+    
+      - name: Archive 
+        run: zip -j amd64-mev-geth.zip build/bin/geth
+ 
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }} 
+          asset_path: ./amd64-mev-geth.zip
+          asset_name: amd64-mev-geth.zip
+          asset_content_type: application/zip
