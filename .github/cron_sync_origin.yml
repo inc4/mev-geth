@@ -1,0 +1,19 @@
+name: Merge upstream master
+on:
+  schedule:
+    - cron:  '0/5 * * * *'
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Merge upstream
+        run: |
+          git config --global user.name 'devops'
+          git config --global user.email 'devops@inc4.net'
+          git remote add upstream https://github.com/flashbots/mev-geth.git
+          git fetch upstream
+          git merge --no-edit upstream/master
+          git push
