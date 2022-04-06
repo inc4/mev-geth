@@ -17,8 +17,8 @@ upstream.fetch()
 remote_origin_refs = repo.remote("origin").refs
 remote_upstream_refs = repo.remote("upstream").refs
 
-origin_branches = [branch.name.split('/')[1] for branch in remote_origin_refs]
-upstream_branches = [branch.name.split('/')[1] for branch in remote_upstream_refs]
+origin_branches = [branch.name.split('/', 1)[1] for branch in remote_origin_refs]
+upstream_branches = [branch.name.split('/', 1)[1] for branch in remote_upstream_refs]
 
 common_branches = [branch for branch in upstream_branches if branch in origin_branches]
 new_branches = [branch for branch in upstream_branches if branch not in origin_branches]
