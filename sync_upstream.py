@@ -41,7 +41,7 @@ def merge_existing_branch(git, branch, main_branch):
         print(err)
         git.merge("--abort")
     else:
-        print("Successfuly merged" + branch + "branch")
+        print("*"*20 + "-Successfuly merged " + branch + " branch-" + "*"*20)
 
 def merge_non_existing_branch(git, branch, main_branch):
     try:
@@ -56,7 +56,7 @@ def merge_non_existing_branch(git, branch, main_branch):
         print(err)
         git.merge("--abort")
     else:
-        print("Successfuly merged" + branch + "branch")
+        print("*"*20 + "-Successfuly merged " + branch + " branch-" + "*"*20)
 
 
 git = repo.git
