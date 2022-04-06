@@ -29,17 +29,23 @@ print("New branches: ", new_branches)
 print("Common branches: ", common_branches)
 
 def merge_existing_branch(git, branch, main_branch):
-    git.checkout(branch)
-    git.merge("--no-edit", "upstream/" + branch)
-    git.push()
-    git.checkout(main_branch)
+    try:
+        git.checkout(branch)
+        git.merge("--no-edit", "upstream/" + branch)
+        git.push()
+        git.checkout(main_branch)
+    except git.exc.GitCommandError:
+        print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
 
 def merge_non_existing_branch(git, branch, main_branch):
-    git.checkout(main_branch)
-    git.checkout('-b', branch)
-    git.merge("--no-edit", "upstream/" + branch)
-    git.push("--set-upstream", "origin", branch)
-    git.checkout(main_branch)
+    try:
+        git.checkout(main_branch)
+        git.checkout('-b', branch)
+        git.merge("--no-edit", "upstream/" + branch)
+        git.push("--set-upstream", "origin", branch)
+        git.checkout(main_branch)
+    except git.exc.GitCommandError:
+        print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
 
 git = repo.git
 
