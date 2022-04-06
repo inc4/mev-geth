@@ -35,8 +35,10 @@ def merge_existing_branch(git, branch, main_branch):
         git.merge("--no-edit", "upstream/" + branch)
         git.push()
         git.checkout(main_branch)
-    except exc.GitCommandError:
+    except exc.GitCommandError as err:
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
+        print(branch)
+        print(err)
 
 def merge_non_existing_branch(git, branch, main_branch):
     try:
@@ -45,8 +47,10 @@ def merge_non_existing_branch(git, branch, main_branch):
         git.merge("--no-edit", "upstream/" + branch)
         git.push("--set-upstream", "origin", branch)
         git.checkout(main_branch)
-    except exc.GitCommandError:
+    except exc.GitCommandError as err:
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
+        print(branch)
+        print(err)
 
 git = repo.git
 
