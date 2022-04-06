@@ -1,4 +1,4 @@
-name: Merge upstream master
+name: Merge upstream
 on:
   schedule:
     - cron:  '0/5 * * * *'
@@ -9,11 +9,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: Install pip packages
+        run: pip3 install -r requirements.txt
+
       - name: Merge upstream
         run: |
-          git config --global user.name 'devops'
-          git config --global user.email 'devops@inc4.net'
-          git remote add upstream https://github.com/flashbots/mev-geth.git
-          git fetch upstream
-          git merge --no-edit upstream/master
-          git push
+          git pull --unshallow
+          python3 sync_upstream.py
