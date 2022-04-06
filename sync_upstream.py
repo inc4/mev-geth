@@ -40,6 +40,8 @@ def merge_existing_branch(git, branch, main_branch):
         print(branch)
         print(err)
         git.merge("--abort")
+    else:
+        print("Successfuly merged" + branch + "branch")
 
 def merge_non_existing_branch(git, branch, main_branch):
     try:
@@ -53,12 +55,16 @@ def merge_non_existing_branch(git, branch, main_branch):
         print(branch)
         print(err)
         git.merge("--abort")
+    else:
+        print("Successfuly merged" + branch + "branch")
 
 
 git = repo.git
 
+print("syncing common branches")
 for branch in common_branches:
     merge_existing_branch(git, branch, main_branch)
 
+print("Syncing new branches")
 for branch in new_branches:
     merge_non_existing_branch(git, branch, main_branch)
