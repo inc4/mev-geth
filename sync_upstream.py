@@ -39,6 +39,7 @@ def merge_existing_branch(git, branch, main_branch):
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
         print(branch)
         print(err)
+        git.merge("--abort")
 
 def merge_non_existing_branch(git, branch, main_branch):
     try:
@@ -51,6 +52,8 @@ def merge_non_existing_branch(git, branch, main_branch):
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
         print(branch)
         print(err)
+        git.merge("--abort")
+
 
 git = repo.git
 
