@@ -1,7 +1,7 @@
 from git import Repo
 import os
 
-upstream_url = "https://github.com/november-pain/git-fork-sync-test.git"
+upstream_url = "https://github.com/flashbots/mev-geth.git"
 main_branch = "master"
 
 repo = Repo(os.getcwd())
