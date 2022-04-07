@@ -24,7 +24,7 @@ upstream_branches = [branch.name.split('/', 1)[1] for branch in remote_upstream_
 common_branches = [branch for branch in upstream_branches if branch in origin_branches]
 new_branches = [branch for branch in upstream_branches if branch not in origin_branches]
 
-dangling_branches = [branch for branch in origin_branches not in upstream_branches]
+dangling_branches = [branch for branch in origin_branches if branch not in upstream_branches]
 
 print("Upstream branches: ", upstream_branches)
 print("Origin branches: ", origin_branches)
