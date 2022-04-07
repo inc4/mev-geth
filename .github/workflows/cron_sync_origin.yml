@@ -1,7 +1,7 @@
 name: Merge upstream
 on:
   schedule:
-    - cron:  '0/5 * * * *'
+    - cron:  '0 13 * * 3'
 jobs:
   merge:
     runs-on: ubuntu-latest
