@@ -32,7 +32,7 @@ print("Common branches: ", common_branches)
 def merge_existing_branch(git, branch, main_branch):
     try:
         git.checkout(branch)
-        git.merge("--no-edit", "upstream/" + branch)
+        git.rebase("upstream/" + branch)
         git.push()
         git.checkout(main_branch)
     except exc.GitCommandError as err:
@@ -47,7 +47,7 @@ def merge_non_existing_branch(git, branch, main_branch):
     try:
         git.checkout(main_branch)
         git.checkout('-b', branch)
-        git.merge("--no-edit", "upstream/" + branch)
+        git.rebase("upstream/" + branch)
         git.push("--set-upstream", "origin", branch)
         git.checkout(main_branch)
     except exc.GitCommandError as err:
