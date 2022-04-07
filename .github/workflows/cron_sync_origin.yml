@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
 
       - name: Install pip packages
         run: pip3 install -r requirements.txt
