@@ -32,14 +32,14 @@ print("Common branches: ", common_branches)
 def merge_existing_branch(git, branch, main_branch):
     try:
         git.checkout(branch)
-        git.rebase("upstream/" + branch)
+        git.rebase("--reapply-cherry-picks", "upstream/" + branch)
         git.push()
         git.checkout(main_branch)
     except exc.GitCommandError as err:
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
         print(branch)
         print(err)
-        git.merge("--abort")
+        # git.merge("--abort")
     else:
         print("*"*20 + "-Successfuly merged " + branch + " branch-" + "*"*20)
 
@@ -47,14 +47,14 @@ def merge_non_existing_branch(git, branch, main_branch):
     try:
         git.checkout(main_branch)
         git.checkout('-b', branch)
-        git.rebase("upstream/" + branch)
+        git.rebase("--reapply-cherry-picks", "upstream/" + branch)
         git.push("--set-upstream", "origin", branch)
         git.checkout(main_branch)
     except exc.GitCommandError as err:
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
         print(branch)
         print(err)
-        git.merge("--abort")
+        # git.merge("--abort")
     else:
         print("*"*20 + "-Successfuly merged " + branch + " branch-" + "*"*20)
 
