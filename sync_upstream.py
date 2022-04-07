@@ -59,8 +59,7 @@ def merge_non_existing_branch(git, branch, main_branch):
         print("*"*20 + "-Successfuly merged " + branch + " branch-" + "*"*20)
 
 def delete_branch(git, branch):
-    git.branch('-D', branch)
-    git.push()
+    git.push("origin", "--delete", branch)
 
 git = repo.git
 
