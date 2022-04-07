@@ -47,16 +47,14 @@ def merge_existing_branch(git, branch, main_branch):
 
 def merge_non_existing_branch(git, branch, main_branch):
     try:
-        git.checkout(main_branch)
-        git.checkout('-b', branch)
-        git.rebase("--reapply-cherry-picks", "-Xours", "upstream/" + branch)
+        git.switch('-c', branch, "upstream/" + branch)
         git.push("-f", "--set-upstream", "origin", branch)
         git.checkout(main_branch)
     except exc.GitCommandError as err:
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
         print(branch)
         print(err)
-        git.rebase("--abort")
+        # git.rebase("--abort")
         # git.reset("--hard", "ORIG_HEAD")
         
         # git.merge("--abort")
