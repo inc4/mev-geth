@@ -40,8 +40,6 @@ def merge_existing_branch(git, branch, main_branch):
         print(branch)
         print(err)
         git.rebase("--abort")
-        # git.reset("--hard", "ORIG_HEAD")
-        # git.merge("--abort")
     else:
         print("*"*20 + "-Successfuly merged " + branch + " branch-" + "*"*20)
 
@@ -54,10 +52,6 @@ def merge_non_existing_branch(git, branch, main_branch):
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
         print(branch)
         print(err)
-        # git.rebase("--abort")
-        # git.reset("--hard", "ORIG_HEAD")
-        
-        # git.merge("--abort")
     else:
         print("*"*20 + "-Successfuly merged " + branch + " branch-" + "*"*20)
 
