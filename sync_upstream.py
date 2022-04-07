@@ -74,4 +74,4 @@ for branch in new_branches:
 
 print("\n" + "*"*20 + "-Deleting old dangling branches-" + "*"*20)
 for branch in dangling_branches:
-    delete_branch(branch)
+    delete_branch(git, branch)
