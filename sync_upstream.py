@@ -33,7 +33,7 @@ def merge_existing_branch(git, branch, main_branch):
     try:
         git.checkout(branch)
         git.rebase("--reapply-cherry-picks", "-Xours", "upstream/" + branch)
-        git.push()
+        git.push("-f")
         git.checkout(main_branch)
     except exc.GitCommandError as err:
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
@@ -50,7 +50,7 @@ def merge_non_existing_branch(git, branch, main_branch):
         git.checkout(main_branch)
         git.checkout('-b', branch)
         git.rebase("--reapply-cherry-picks", "-Xours", "upstream/" + branch)
-        git.push("--set-upstream", "origin", branch)
+        git.push("-f", "--set-upstream", "origin", branch)
         git.checkout(main_branch)
     except exc.GitCommandError as err:
         print("*"*20 + "-MERGE CONFLICT-" + "*"*20)
